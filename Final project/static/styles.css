@@ -1,0 +1,198 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* colors for brand */
+nav .navbar-brand .white
+{
+    color: #ffffff;
+}
+nav .navbar-brand .yellow
+{
+    color: #ffff80;
+}
+nav .navbar-brand .green
+{
+    color: #90ee90;
+}
+/* size for brand */
+nav .navbar-brand .big
+{
+    font-size: 45px;
+}
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+/* navbar font size */
+#navbar
+{
+    font-size: 22px;
+}
+
+.smallfont
+{
+    font-size: 20px;
+}
+.medfont
+{
+    font-size: 30px;
+}
+.blue
+{
+    color: lightblue;
+}
+.green
+{
+    color: lightgreen;
+}
+/* Tables on index page */
+#tables
+{
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 235px;
+}
+#tables th
+{
+    position:sticky;
+    top:-5px;
+    background-color:black;
+}
+
+/* Form on Post page */
+/* These classes are modified only for the post.html page */
+.post .formPost
+{
+    margin-left:auto;
+    margin-right:auto;
+    display: block;
+    max-width: 350px;
+}
+.post .flabel
+{
+    font-size:20px;
+    width:100px;
+    /*display: inline-block;*/
+    vertical-align: middle;
+    text-align: left;
+    float:left;
+}
+.post .form-control /*inputs*/
+{
+
+    float:right;
+}
+.post .form-group
+{
+    padding-top:20px;
+    padding-bottom:20px;
+    width: 350px;
+}
+.post .form-check-input
+{
+    position:relative;
+    margin-left:20px;
+}
+.post .flabel2
+{
+    float:left;
+}
+.post .form4
+{
+    padding-top:20px;
+    padding-bottom:20px;
+    width: 350px;
+}
+
+/* Page "donate" */
+.donate .form-check-input
+{
+    position:relative;
+    margin-left:20px;
+}
+
+/* Page "terms" */
+.terms .title
+{
+    text-align:left;
+    font-size:30px;
+}
+.terms .par
+{
+    text-align:left;
+    margin-left:200px;
+}
+.terms .title1
+{
+    font-size:20px;
+}
+
+/* Page "history" */
+#histotable
+{
+    /*overflow-x:auto;
+    overflow-y:auto;*/
+    display:inline-block;
+    margin-left:0px;
+    margin-right:0px;
+    min-width:1800px;
+    width:auto;
+    max-height:350px;
+    /*table-layout: fixed;*/
+    /*border-collapse:*/
+    /*float:left;*/
+
+}
+#histotable th
+{
+    padding:10px;
+    /*position:sticky;
+    top:0px;*/
+}
+#histotable td
+{
+    padding:5px;
+}
+#histlabel
+{
+    margin-top:-30px;
+}
+/* Page "How to use" */
+.how .title
+{
+    text-align:left;
+    font-size:30px;
+}
+.how .par
+{
+    text-align:left;
+    margin-left:100px;
+}
+.how .title1
+{
+    font-size:20px;
+}

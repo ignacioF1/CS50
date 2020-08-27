@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+    <h3 id="histlabel">HISTORY</h3>
+
+    <table id="histotable" class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">Post Date</th>
+          <th scope="col">Operation</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Product/Item</th>
+          <th scope="col">Description</th>
+          <th scope="col">Location</th>
+          <th scope="col">Reservation date</th>
+          <th scope="col">Donor/Receiver</th>
+          <th scope="col">Days for pick up</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Message</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for i in operations %}
+        <tr>
+            <td>{{ i.date }}</td>
+            <td>{{ i.operation }}</td>
+            <td>{{ i.quantity }}</td>
+            <td>{{ i.product}}</td>
+            <td>{{ i.description }}</td>
+            <td>{{ i.location }}</td>
+            {% if i.resdate %}<td class="blue">{{ i.resdate }}</td>{% else %}<td class="green">Pending!</td>{% endif %}
+            {% if i.providerID %}<td class="blue">{{ i.providerID }}</td>{% else %}<td class="green">Pending!</td>{% endif %}
+            <td>{{ i.PUdays}}</td>
+            {% if i.email %}<td class="blue">{{ i.email}}</td>{% else %}<td class="green">Pending!</td>{% endif %}
+            {% if i.phone %}<td class="blue">{{ i.phone }}</td>{% else %}<td class="green">Pending!</td>{% endif %}
+            <td>{{ i.message}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

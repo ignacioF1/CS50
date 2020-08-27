@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Donate
+{% endblock %}
+
+{% block main %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="crossorigin=""/>
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+ <script src="https://npmcdn.com/leaflet-geometryutil"></script>
+
+<div class="donate">
+    <legend>DONATE A REQUESTED PRODUCT/ITEM</legend>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Receiver</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Product/Item</th>
+          <th scope="col">Description</th>
+          <th scope="col">Location</th>
+          <th scope="col">Days for pick up</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>{{ selec[0].date }}</td>
+            <td>{{ selec[0].receiverID }}</td>
+            <td>{{ selec[0].quantity }}</td>
+            <td>{{ selec[0].product }}</td>
+            <td>{{ selec[0].description }}</td>
+            <td>{{ selec[0].location }}</td>
+            <td>{{ selec[0].PUdays }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>If the user provided his/her geolocation, you will see it on the map!</p>
+
+    <div id="mapid" style="height:400px;"></div>
+    <div style="margin-top:20px;">
+    <p id="distlabel">
+    Distance between Receiver and Donor: <span id="length"></span>Km
+    </p>
+    </div>
+    <form action="/donate" method="post">
+        <p>Leave a short message to the receiver.</p>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="message" placeholder="Your message..." type="text">
+        </div>
+
+        <div class="form-group">
+          <label id="label1" class="flabel2">
+              I've checked the information and agree with GiveItAway <a href="/terms">terms and conditions</a>.
+          <input for="label1" name="check" id="check" class="form-check-input" type="checkbox" value="">
+          </label>
+        </div>
+        <button id="donate" class="btn btn-primary" type="submit" disabled="disabled">Donate!</button>
+    </form>
+</div>
+<meta id="locatFull" data-data="{{ selec[0].locatFull }}">
+<meta id="rename" data-data="{{ selec[0].receiverID }}">
+<script>
+    var checker = document.getElementById('check');
+    var donate = document.getElementById('donate');
+    checker.onchange = function() {
+    donate.disabled = !this.checked;
+    };
+    // Go to the top of the page
+    window.scrollTo(0, 0);
+    // Map details
+    // Get the donor location
+    //var donator = [-35, -59];
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(getPosition);}
+    else {donator = null;}
+
+    function getPosition(position){
+    var donator = [""+position.coords.latitude+"" , ""+position.coords.longitude+""];
+    // Import Receiver's username (passed with Jinja to the html's meta)
+    var rename = $('#rename').data("data");
+    // Import locatFull variable (passed with Jinja to the html's meta)
+    var loc = $('#locatFull').data("data");
+    // Check if the locationFull is empty
+    if(loc === "None"){receiver = null}
+    else{
+    // Transform csv string to array
+    var locatFull = loc.split(",");
+    var receiver = locatFull;
+    }
+
+    // If donator or receiver === null, don´t show the map
+    if(receiver === null || donator === null){
+    document.querySelector('#mapid').innerHTML = '|||||||||||||||||| No Donor or Receiver location ||||||||||||||||||';
+    document.querySelector('#mapid').style.height="15px";
+    document.querySelector('#distlabel').style.visibility='hidden';
+    document.querySelector('#distlabel').style.height="0px";
+    }
+    else{
+    // Load map at position and zoom
+    //var donator = [-34.5, -58.5];
+    //var receiver = [-34.7, -58.7];
+    var mymap = L.map('mapid').setView(donator, 10);
+    // Donator marker
+    var marker = L.marker(donator).addTo(mymap);
+    marker.bindPopup("<b>Donor</b><br>(you)").openPopup();
+    // Receiver marker
+    var marker1 = L.marker(receiver).addTo(mymap);
+    marker1.bindPopup("<b>Receiver</b><br>I am " + rename).openPopup();
+    // Line between D and R
+    var polygon = L.polygon([donator,receiver], {color: 'red'}).addTo(mymap);
+
+    //mymap.fitBounds([donator,receiver]); // center view between two points
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoibmFjaG9mMSIsImEiOiJja2RvdThsMHkwYnM5MnlvMmN0bmk0c3RpIn0.olLc5Ag1TwT3XOBWBHs0BQ'
+    }).addTo(mymap);
+
+    // Calculate distance
+    var distance = mymap.distance(donator,receiver);
+    document.getElementById('length').innerHTML = (distance/1000).toFixed(2);
+    } // Close else statement
+    } // Close getPosition function
+
+</script>
+
+{% endblock %}

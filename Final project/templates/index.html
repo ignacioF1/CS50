@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Donate/Receive
+{% endblock %}
+
+{% block main %}
+	<script>
+	        // When loading the page, if the alert is not empty, show it (hidden by default)
+	        function load(){
+	                let alert = '{{ alert }}';
+	                if (alert != '')
+	                    {document.querySelector('#alert').style.visibility = 'visible';}
+	                        }
+	        window.onload = load;
+
+            setTimeout(function() {
+            $('#alert').fadeOut('slow');
+            }, 5000); // Time in milliseconds to hide the alert
+	</script>
+
+    <!-- ALERT -->
+    <div style="min-height:60px;">
+    <div class="alert alert-success" role="alert" id="alert" style="visibility:hidden;">
+    {{ alert }}
+    </div>
+    </div>
+
+<form action="/" method="post">
+    <h3>DONATING list</h3>
+    <div id="tables">
+    <table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Donor</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Product/Item</th>
+          <th scope="col">Description</th>
+          <th scope="col">Location</th>
+          <th scope="col">Receiver</th>
+          <th scope="col">Days for pick up</th>
+          <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in donating %}
+        <tr>
+            <td>{{ row.date }}</td>
+            <td>{{ row.donatorID }}</td>
+            <td>{{ row.quantity }}</td>
+            <td>{{ row.product }}</td>
+            <td>{{ row.description }}</td>
+            <td>{{ row.location }}</td>
+            {% if row.receiverID %}<td class="blue">{{ row.receiverID }}</td>{% else %}<td class="green">Pending!</td>{% endif %}
+            <td>{{ row.PUdays }}</td>
+            {% if row.receiverID %}<td></td>
+            {% else %}<td><button type="submit" name="receive" value="{{ row.opID }}" class="btn btn-outline-success" style="max-height:25px;padding:0px;">Receive!</button></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+    <div style="margin-top:10px;"></div>
+        <th scope="row">TOTAL DONATIONS:</th>
+        <th scope="row">{{ total_donations }}</th>
+<div style="margin-top:20px;"></div>
+
+    <h3>RECEIVING list</h3>
+    <div id="tables">
+    <table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Receiver</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Product/Item</th>
+          <th scope="col">Description</th>
+          <th scope="col">Location</th>
+          <th scope="col">Donor</th>
+          <th scope="col">Days for pick up</th>
+          <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in receiving %}
+        <tr>
+            <td>{{ row.date }}</td>
+            <td>{{ row.receiverID }}</td>
+            <td>{{ row.quantity }}</td>
+            <td>{{ row.product }}</td>
+            <td>{{ row.description }}</td>
+            <td>{{ row.location }}</td>
+            {% if row.donatorID %}<td class="blue">{{ row.donatorID }}</td>{% else %}<td class="green">Pending!</td>{% endif %}
+            <td>{{ row.PUdays }}</td>
+            {% if row.donatorID %}<td></td>
+            {% else %}<td><button type="submit" name="donate" value="{{ row.opID }}" class="btn btn-outline-success" style="max-height:25px;padding:0px;">Donate!</button></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+    <div style="margin-top:10px;"></div>
+        <th scope="row">TOTAL RECEIVINGS:</th>
+        <th scope="row">{{ total_receivings }}</th>
+
+</form>
+
+{% endblock %}

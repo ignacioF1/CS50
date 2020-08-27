@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+	<script>
+	        // When loading the page, if the alert is not empty, show it (hidden by default)
+	        function load(){
+	                let alert = '{{ alert }}';
+	                if (alert != '')
+	                    {document.querySelector('#alert').style.visibility = 'visible';}
+	               }
+	        window.onload = load;
+
+            setTimeout(function() {
+            $('#alert').fadeOut('slow');
+            }, 1000); // Time in milliseconds to hide the alert
+
+	</script>
+	<div style="min-height:60px">
+    <div class="alert alert-success" role="alert" id="alert" style="visibility:hidden">
+    {{ alert }}
+    </div>
+    </div>
+    <h3>PORTFOLIO</h3>
+
+    <table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">Symbol</th>
+          <th scope="col">Name</th>
+          <th scope="col">Shares</th>
+          <th scope="col">Price</th>
+          <th scope="col">TOTAL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in operations %}
+        <tr>
+            <td>{{ row.symbol|upper }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.shar }}</td>
+            <td>{{ usd(row.price) }}</td>
+            <td>{{ usd(row.total) }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>CASH</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ actual_cash }}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <th scope="row"></th>
+        <th scope="row"></th>
+        <th scope="row"></th>
+        <th scope="row"></th>
+        <th scope="row">{{ total_cash }}</th>
+    </tfoot>
+    </table>
+
+{% endblock %}

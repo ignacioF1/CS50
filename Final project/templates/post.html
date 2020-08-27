@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Post
+{% endblock %}
+
+{% block main %}
+
+<div class="post">
+
+<form action="/post" method="post" class="formPost" id="form" onsubmit="submitHandler()">
+  <fieldset>
+    <legend>POST AN OPERATION</legend>
+
+    <div class="form-group">
+      <label for="operation" class="flabel">I want to </label>
+      <select name="operation" class="form-control" id="operation">
+        <option value="" disabled selected hidden>Select</option>
+        <option>Donate</option>
+        <option>Receive</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="quantity" class="flabel">Quantity</label>
+      <input name="quantity" id="quantity" type="text" class="form-control" autocomplete="off" autofocus placeholder="Quantity">
+    </div>
+
+    <div class="form-group">
+      <label for="product" class="flabel">Product/Item</label>
+      <input name="product" id="product" type="text" class="form-control" autocomplete="off" autofocus placeholder="Product/Item">
+    </div>
+
+    <div class="form-group">
+      <label for="description" class="flabel">Description</label>
+      <textarea name="description" class="form-control" id="description" rows="3" placeholder="Description"></textarea>
+    </div>
+
+    <div class="form4">
+    </div>
+
+    <div class="form-group">
+      <label for="location" class="flabel">Location</label>
+      <input name="location" id="location" type="text" class="form-control" autocomplete="off" autofocus placeholder="Location">
+    </div>
+
+    <div class="form-group">
+      <label id="label1" class="flabel2">
+        Check to submit your actual location
+        <input for="label1" name="enableLOC" id="enableLOC" class="form-check-input" type="checkbox" value="" checked>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="flabel1" for="PUdays">Pick up days</label>
+      <label class="flabel1" type="text" id="PUdays" for="range1" value="5">5</label>
+      <input name="days" type="range" class="custom-range" id="range1" min="5" max="35" step="5" value="5">
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="post">Post</button>
+  </fieldset>
+</form>
+
+</div>
+
+<script>
+// Show the value in numbers when moving the range bar
+let i = document.querySelector('#range1'),
+o = document.querySelector('#PUdays');
+o.innerHTML = i.value;
+
+i.addEventListener('input', function () {
+  o.innerHTML = i.value;
+
+}, false);
+
+// Get the location and pass it to Flask
+locate = null; // if the variable remains in null, not geoloc available
+if (navigator.geolocation) {
+navigator.geolocation.getCurrentPosition(function(position){
+locate = position.coords.latitude +","+ position.coords.longitude;
+  });
+}
+
+// When submitting the form, append the location to the other form's values
+function submitHandler()
+{
+submitVal = $('#post').val();
+$('#form').append("<input type='hidden' name='locationFull' value="+ locate +submitVal+" />");
+     return true;
+}
+
+</script>
+
+{% endblock %}

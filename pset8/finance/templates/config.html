@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Configuration
+{% endblock %}
+
+{% block main %}
+    <form action="/config" method="post">
+        <div class="form-group">
+            <ln> Change your password </ln>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="New password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="rpassword" placeholder="Re-type New password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Change</button>
+    </form>
+{% endblock %}

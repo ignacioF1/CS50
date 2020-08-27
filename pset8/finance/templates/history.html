@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+	<script>
+
+	</script>
+
+    <h3>HISTORY</h3>
+
+    <table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">Symbol</th>
+          <th scope="col">Shares</th>
+          <th scope="col">Price</th>
+          <th scope="col">Transacted</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for i in operations %}
+        <tr>
+            <td>{{ i.symbol|upper }}</td>
+            <td>{{ i.shares }}</td>
+            <td>{{ usd(i.price) }}</td>
+            <td>{{ i.transacted}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

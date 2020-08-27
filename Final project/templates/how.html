@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    How to use
+{% endblock %}
+
+{% block main %}
+
+<div class="how">
+<label class="title">How to use</label>
+<p class="title1">What about, and how to use GiveItAway amazing platform?</p>
+<p class="par">
+<br>My project, called "GiveItAway", consists of a web-based application allowing people to give things away to other people who need them
+<br>or things they are going to discard to recycling companies or organisations.
+<br>Also for people who are looking forward to receiving specific things.
+<br>How to use:
+<br>- At the main page, the user has to register in order to see the available product/items, add a new one or to ask for a specific one.
+<br>- In order to register, the user has to click on the "Register" button where a form with the username, password and retype password has
+<br>to be filled in.
+<br>- After registering, the user is able to log in with his/her username and password.
+<br>- Once logged in:
+<br>	- A "Logged in!" message will be displayed at the top of the page and the user would see his/her username at the top right hand corner.
+<br>	By clicking on the username, the user is able to change his/her password.
+<br>	- At the main page, two tables will be displayed. Both tables are ordered by date, but placing the "Pending!" items first.
+<br>	The rows displaying "Pending!" indicate that they are still available, otherwise, the name of the donor/receiver is displayed.
+<br>	In case of large tables, only the first elements will be shown and the user can scroll through them with the arrows.
+<br>	- 1) By pressing the button placed inside the row of the product/item that the user is interested in receiving or donating, he/she
+<br>	will beguin the process to receive an available item from the "Donating list" or to donate an available item from the "Receiving list".
+<br>	- 2) By clicking on the "Post" button, the user will beguin the process to add an item into the "Donating list" or the "Receiving list".
+<br>	- By clicking on the "History" button, the user is able to see a list with all of the operations made. The user will have to check in
+<br>	this section if a donation or receiving was made on his/her posted product/item.
+<br>	- By clicking on the "Log out" button, the user will log out from his acount.
+<br>
+<br>1- RECEIVE/DONATE -> A new page will be loaded displaying the selected product/item.
+<br>Only if the user's geolocation is available and the geolocation of the person who did the "post" was accepted and available at that moment,
+<br>a map will be displayed, showing the locations of both the Receiver and the Donor, marking each one with a pop up message and a line
+<br>between them. The line's distance will be shown below the map.
+<br>Below the latter, the person will be asked to leave a message to the other person with any important details for the transaction.
+<br>After that, the user will be asked to accept the terms of the platform in order to enable the button which has to be clicked to complete the
+<br>transaction. A link to the platform's <a href="/terms">terms and conditions</a> is available in that page.
+<br>When finishing the process, a message showing the satisfactory result will be displayed at the top of the main page.
+<br>
+<br>2- POST -> A new page will be loaded where the user will have to complete the following:
+<br>		- Select if the transaction is to Donate or Receive
+<br>		- Input the product's/item's quantity
+<br>		- Input its name
+<br>		- Input its descripion
+<br>		- Input its location (in case of submitting the user location automatically (next option), this does not need to be specific)
+<br>		- Location checkbox. The user has to check this option in order to submit his current location through the browser's geolocation.
+<br>			If the product/item will not be delivered/received at the user's current location, this MUST NOT be checked and the
+<br>			location has to be submitted in the previous field.
+<br>		- Slide the selector to indicate the days that the donor/receiver will have to conclude the transaction. Also, this will be
+<br>			the period of time since the publication date that the item will be available in the Donating/Receiving list.
+<br>		- Click on the "Post" button to finish the process.
+<br>		- When finishing the transaction, a message showing the satisfactory result will be displayed at the top of the main page.
+<br>
+<br>Tools used:
+<br>- https://bootswatch.com/cyborg/ Bootswath is the CSS source used for the webpage and most of the components, form, buttons, etc.
+<br>- https://leafletjs.com/ Leaflet for the interactive maps, filled with popups, lines and markers.
+<br>Leaflet is an open-source JavaScript library for mobile-friendly interactive maps.
+<br>- https://www.mapbox.com/ Mapbox API for the map's streets tile layer.
+<br>Mapbox Static Tiles is an API based on OpenStreetMap which needs an access token that must be requested.
+<br>The Mapbox Static Tiles API serves raster tiles generated from Mapbox Studio styles. Raster tiles can be used in traditional web mapping
+<br>libraries like Mapbox.js, Leaflet, OpenLayers, and others to create interactive slippy maps.
+<br>- The platform is programmed in Python using Flask framework and Jinja. Most of the pages use Javascript to add functionalities to them,
+<br>such as to display the components in the map, calculate distances, disabling buttons and showing alerts.
+<br>- SQLite 3 for the database containning 4 tables: one for the user data, one for the history records, one for the Donating table, and one
+<br>for the Receiving table.
+
+</p>
+<input type="button" class="btn btn-primary" value="Go Back" onclick="history.back(-1)" />
+</div>
+
+{% endblock %}
